@@ -14,7 +14,7 @@ const db = mysql.createConnection({
     database: process.env.DB_NAME
 });
 app.get("/quiz",(req , res)=>{
-    db.query("select * from games order by RAND()" , (err , result)=>{
+    db.query("select * from games order by RAND() Limit 20" , (err , result)=>{
         if(err){
             console.log(err)
         }else{
