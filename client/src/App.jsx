@@ -2,13 +2,17 @@ import { useState } from "react";
 import "./App.css";
 import axios from "axios";
 import QuestionCard from "./components/questionCard";
+import Results from "./components/Results";
 
 function App() {
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState({});
-  const progress = ((index + 1) / questions.length) * 100;
+  const [status , setStatus] = useState("quiz")
+ 
   
+  const progress = ((index + 1) / questions.length) * 100;
+
   const getQuestions = () => {
     axios.get("http://localhost:3001/quiz").then((res) => {
       setQuestions(res.data);
@@ -20,6 +24,9 @@ function App() {
       setIndex(index + 1);
     }
   };
+  const goToResults = ()=>{
+    setStatus("results")
+  }
 
   const handlePrev = () => {
     if (index !== 0) {
@@ -33,7 +40,12 @@ function App() {
       [index]: value,
     }));
   };
-
+  const restartQuiz = () =>{
+    setStatus("quiz")
+    setQuestions([])
+    setAnswers([])
+    setIndex(0)
+  }
 
   return (
     <>
@@ -50,10 +62,9 @@ function App() {
 
       <div
         className={`${
-          questions.length == 0 ? "hidden" : "flex"
+          questions.length == 0 || status=="results" ? "hidden" : "flex"
         }  flex-col gap-8 justify-center items-center w-[460px] border-2 p-4 rounded-2xl `}
       >
-        
         <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
           <div
             className="h-full bg-green-500 transition-all duration-300"
@@ -69,9 +80,15 @@ function App() {
 
         <div className="flex justify-between w-full">
           <button onClick={handlePrev}>Prev</button>
-          <button onClick={handleNext}>{index == 19 ? "Submit" : "Next"}</button>
+          <button onClick={index==19 ?goToResults :handleNext}>
+            {index == 19 ? "Submit" : "Next"}
+          </button>
         </div>
       </div>
+      <div className={status=='results'? "block": "hidden"}>
+        <Results questions={questions} answers={answers}></Results>
+      </div>
+      <button onClick={restartQuiz}>restart</button>
       
     </>
   );
