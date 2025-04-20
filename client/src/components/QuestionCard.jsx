@@ -8,8 +8,8 @@ const QuestionCard = ({ question, selected, onSelect }) => {
   const option3 = question?.option3;
   const option4 = question?.option4;
   return (
-    <div className="flex flex-col gap-3">
-      <h2>{title}</h2>
+    <div className="flex flex-col gap-3 w-full ">
+      <h2 className="text-2xl font-bold text-center">{title}</h2>
 
       <div className="flex flex-row justify-between">
         <div className="flex flex-row gap-2">
@@ -19,6 +19,7 @@ const QuestionCard = ({ question, selected, onSelect }) => {
             value={option1}
             checked={selected === option1}
             onChange={() => onSelect(option1)}
+            className="cursor-pointer"
           />
           <label>{option1}</label>
         </div>
@@ -30,6 +31,7 @@ const QuestionCard = ({ question, selected, onSelect }) => {
             value={option2}
             checked={selected === option2}
             onChange={() => onSelect(option2)}
+            className="cursor-pointer"
           />
           <label>{option2}</label>
         </div>
@@ -41,6 +43,7 @@ const QuestionCard = ({ question, selected, onSelect }) => {
             value={option3}
             checked={selected === option3}
             onChange={() => onSelect(option3)}
+            className="cursor-pointer"
           />
           <label>{option3}</label>
         </div>
@@ -52,6 +55,7 @@ const QuestionCard = ({ question, selected, onSelect }) => {
             value={option4}
             checked={selected === option4}
             onChange={() => onSelect(option4)}
+            className="cursor-pointer"
           />
           <label>{option4}</label>
         </div>
