@@ -9,6 +9,7 @@ function App() {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [status , setStatus] = useState("quiz")
+  const [rightAnswers, setRightAnswers] = useState(0);
  
   
   const progress = ((index + 1) / questions.length) * 100;
@@ -26,6 +27,7 @@ function App() {
   };
   const goToResults = ()=>{
     setStatus("results")
+    CalcResult()
   }
 
   const handlePrev = () => {
@@ -46,6 +48,16 @@ function App() {
     setAnswers([])
     setIndex(0)
   }
+  
+const CalcResult = () => {
+  let count = 0
+  questions.forEach((question, ind) => {
+    if (question.correct_option === answers[ind]) {
+      count++
+    }
+  });
+  setRightAnswers(count)
+};
 
   return (
     <>
@@ -85,10 +97,12 @@ function App() {
           </button>
         </div>
       </div>
-      <div className={status=='results'? "block": "hidden"}>
-        <Results questions={questions} answers={answers}></Results>
+      <div className={`${status=='results'? "block": "hidden"} w-full`}>
+        <Results questions={questions} answers={answers} rightAnswers={rightAnswers}></Results>
       </div>
-      <button onClick={restartQuiz}>restart</button>
+      <div className={`w-full flex justify-center mt-4 ${questions.length==0 ? "hidden" : "block"}`}>
+        <button onClick={restartQuiz}>restart</button>
+      </div>
       
     </>
   );

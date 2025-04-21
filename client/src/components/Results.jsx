@@ -1,20 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
-const Results = ({questions , answers}) => {
-const [rightAnswer, setRightAnswer] = useState(0);
+const Results = ({questions , answers , rightAnswers}) => {
 
 
-const CalcResult = () => {
-    questions.forEach((question, ind) => {
-      if (question.correct_option === answers[ind]) {
-        setRightAnswer(rightAnswer + 1);
-      }
-    });
-  };
+
   return (
     <div className="flex flex-col items-center gap-6 p-6 w-full max-w-2xl mx-auto  rounded-2xl ">
         <h2 className="text-2xl font-bold text-center ">
-    
+            you got {rightAnswers}/20 right
         </h2>
         <ul className="flex flex-col gap-4 w-full">
           {questions.map((question, ind) => {
